@@ -15,7 +15,23 @@ export interface TodoProps {
 
 export const TodoBox = () => {
 
+    
     const [todo, setTodo] = useState([
+        {   
+            id: uuidv4(),
+            title: "Terminar projeto 1",
+            isComplete: false
+        },
+        {   
+            id: uuidv4(),
+            title: "Terminar projeto 1",
+            isComplete: true
+        },
+        {   
+            id: uuidv4(),
+            title: "Terminar projeto 1",
+            isComplete: true
+        },
         {   
             id: uuidv4(),
             title: "Terminar projeto 1",
@@ -23,6 +39,12 @@ export const TodoBox = () => {
         },
 
     ])
+    
+    const totalCountTask = todo.length;
+
+    const taskComplete = todo.filter(todo => todo.isComplete === true)
+
+    console.log( taskComplete);
 
     const hadleTodoToStatus = (event: FormEvent) => {
         event.preventDefault()
@@ -35,13 +57,13 @@ export const TodoBox = () => {
                     <div className={styles.countCriated}>
                         <strong>Tarefas criadas</strong>
                         <div className={styles.boxNumber}>
-                            <strong>1</strong>
+                            <strong>{totalCountTask}</strong>
                         </div>
                     </div>
                     <div className={styles.countComplited}>
                         <strong>Concluídas</strong>
                         <div className={styles.boxNumber}>
-                            <strong>1</strong>
+                            <strong> {taskComplete.length} de {totalCountTask}</strong>
                         </div>
                     </div>
                 </div>
