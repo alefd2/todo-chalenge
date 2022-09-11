@@ -16,6 +16,7 @@
 
 form {
     margin-bottom: 4rem;
+    margin-top: calc(0px - 1.5rem - 6px);
 }
 
 .formEdit input {

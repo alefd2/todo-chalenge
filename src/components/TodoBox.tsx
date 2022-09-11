@@ -31,7 +31,7 @@ export const TodoBox = () => {
                 {
                     !todo ? 
                         (
-                            <div className={styles.todoContentContainersEmpty}>
+                            <div className={styles.todoContentContainer}>
                                 <div className={styles.divider} ></div>
                             <img src={Clipboard2} width={56} alt="" />
                             <strong>Você ainda não tem tarefas cadastradas</strong>
