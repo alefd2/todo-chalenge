@@ -1,11 +1,32 @@
 import styles from './TodoBox.module.css';
 import Clipboard2 from '../assets/Clipboard.svg';
-import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import { FormEvent, useState } from 'react';
+import { CardTodo } from './CardTodo';
+
+
+export interface TodoProps {
+    id: string;
+    title: string;
+    isComplete: boolean;
+}
+
 
 export const TodoBox = () => {
 
-    const [todo, setTodo] = useState(0);
+    const [todo, setTodo] = useState([
+        {   
+            id: uuidv4(),
+            title: "Terminar projeto 1",
+            isComplete: false
+        },
 
+    ])
+
+    const hadleTodoToStatus = (event: FormEvent) => {
+        event.preventDefault()
+    }
 
     return (
         <>
@@ -40,7 +61,16 @@ export const TodoBox = () => {
                         )
                     :
                         (
-                            <div>TEm todo</div>
+                            <div className={styles.todoContentContainer}>
+                               { todo.map((todo)=>
+                                    <CardTodo 
+                                        title={todo.title}
+                                        isComplete={todo.isComplete}
+                                        id={todo.id}
+                                    />
+                                )}
+                            </div>
+                            
                         )
                 }
             </main>
