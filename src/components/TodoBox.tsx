@@ -1,54 +1,25 @@
 import styles from './TodoBox.module.css';
 import Clipboard2 from '../assets/Clipboard.svg';
-import { v4 as uuidv4 } from 'uuid';
 
 import { FormEvent, useState } from 'react';
 import { CardTodo } from './CardTodo';
+import { TodoProps } from '../App';
 
-
-export interface TodoProps {
-    id: string;
-    title: string;
-    isComplete: boolean;
+export interface BoxTodoProps {
+    todos: TodoProps[],
+    onDelete: (id: string)=> void
+    onCheck: (id: string)=> void
 }
 
+export const TodoBox = ({todos, onDelete, onCheck}: BoxTodoProps) => {
 
-export const TodoBox = () => {
+    const [check, setCheck] = useState(false) 
 
-    
-    const [todo, setTodo] = useState([
-        {   
-            id: uuidv4(),
-            title: "Terminar projeto 1",
-            isComplete: false
-        },
-        {   
-            id: uuidv4(),
-            title: "Terminar projeto 1",
-            isComplete: true
-        },
-        {   
-            id: uuidv4(),
-            title: "Terminar projeto 1",
-            isComplete: true
-        },
-        {   
-            id: uuidv4(),
-            title: "Terminar projeto 1",
-            isComplete: false
-        },
+    const totalCountTask = todos.length;
 
-    ])
-    
-    const totalCountTask = todo.length;
+    const taskComplete = todos.filter(todo => todo.isComplete)
 
-    const taskComplete = todo.filter(todo => todo.isComplete === true)
-
-    console.log( taskComplete);
-
-    const hadleTodoToStatus = (event: FormEvent) => {
-        event.preventDefault()
-    }
+    const validateTodo = todos.length === 0;
 
     return (
         <>
@@ -72,7 +43,7 @@ export const TodoBox = () => {
 
             <main>
                 {
-                    !todo ? 
+                    validateTodo ? 
                         (
                             <div className={styles.todoContentContainer}>
                                 <div className={styles.divider} ></div>
@@ -84,11 +55,14 @@ export const TodoBox = () => {
                     :
                         (
                             <div className={styles.todoContentContainer}>
-                               { todo.map((todo)=>
+                               { todos.map((todo)=>
                                     <CardTodo 
-                                        title={todo.title}
-                                        isComplete={todo.isComplete}
+                                        key={todo.id}
                                         id={todo.id}
+                                        isComplete={todo.isComplete}
+                                        title={todo.title}
+                                        onDelete={onDelete}
+                                        onCheck={onCheck}
                                     />
                                 )}
                             </div>

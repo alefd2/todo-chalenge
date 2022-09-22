@@ -1,16 +1,25 @@
 import { Trash } from 'phosphor-react';
 import styles from './CardTodo.module.css';
-import { TodoProps } from './TodoBox';
 
 
 
-export const CardTodo = ({ title, isComplete }: TodoProps) => {
+interface Props {
+    id?: string | any;
+    isComplete: boolean;
+    title: string;
+    onDelete: (id: string)=> void;
+    onCheck: (id: string)=> void;
+
+}
+
+export const CardTodo = ({id, title, isComplete, onDelete, onCheck}: Props) => {
+
     return (
         <div className={styles.wrapperCard}>
 
             <div className={styles.check}>
                 <div className={styles.custonCheck}>
-                    <input type="checkbox" id="checkbox1" />
+                    <input onClick={()=>onCheck(id)} type="checkbox" id="checkbox1" />
                 </div>
 
                 <div className={ isComplete == true ? styles.contentTodoDone : styles.contentTodoDoing}>
@@ -19,7 +28,7 @@ export const CardTodo = ({ title, isComplete }: TodoProps) => {
             </div>
 
             <div className={styles.buttonActionTodo}>
-                <button>
+                <button onClick={()=> onDelete(id)}>
                     <Trash size={16} />
                 </button>
             </div>
